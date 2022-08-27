@@ -7,7 +7,7 @@
 template <int N>
 struct List {
   // Array of N integers
-  int items[N]{};
+  int items[N]{0};
 
   // Size of the array
 
@@ -90,19 +90,12 @@ struct List {
       items[top] = item;  // Insert at the end
       top++;              // increment top
     } else {              // otherwise place it to correct position
-      int pos = 0;
+      int pos;
       // Going through each element and find correct position for element
-      for (int i = 0; i < top - 1; i++) {
-        if (items[i] <= item && item <= items[i + 1]) {  // if `item` is between `items[i]` and
-          // `items[i+1]`
-          pos = i + 1;  // set index to `i + 1`
-          break;        // break from the loop
+      for (pos = 0; pos < top; pos++) {
+        if (item <= items[pos]) {  // if `item` is between `items[i]` and `items[i+1]`
+          break;                   // break from the loop
         }
-      }
-
-      // if all elements are smaller than the element
-      if (pos == 0) {
-        pos = top;  // insert at the end
       }
 
       // shift all element to make room for new element
@@ -110,8 +103,8 @@ struct List {
         items[i] = items[i - 1];
       }
 
-      top++;              // Increment the value of top.
       items[pos] = item;  // Assign the value to the correct index in the array
+      top++;              // Increment the value of top.
     }
   }
 
